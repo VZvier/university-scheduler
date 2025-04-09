@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+
+<head>
+    <th:block th:insert="~{fragments/common::meta}"></th:block>
+    <th:block th:insert="~{fragments/common::styles}"></th:block>
+        <title>Users</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/admin::admin-navbar}"></th:block>
+
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <th:block th:insert="~{fragments/common::sidebar}"></th:block>
+        <div class="col col-xxl-10">
+            <div class="row">
+                <th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+            </div>
+            <div class="row">
+                <th:block th:insert="~{fragments/admin::user-table}"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="~{fragments/common::scripts}"></th:block>
+
+</body>
+</html>

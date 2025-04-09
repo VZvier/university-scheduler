@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+
+	<head>
+		<th:block th:insert="~{fragments/common::meta}"></th:block>
+		<th:block th:insert="~{fragments/common::styles}"></th:block>
+		<title>Courses</title>
+	</head>
+	
+<body>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+<div class="container-fluid text">
+	<div class="row flex-nowrap  justify-content-start">
+		<th:block th:insert="~{fragments/common::sidebar}"></th:block>
+		<div class="col col-lg-10">
+			<div class="row">
+				<th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+			</div>
+
+			<div class="row">
+				<div align="center">
+					<table >
+
+						<thead>
+							<tr>
+								<th width="80">Course Id</th>
+								<th width="200" class="text-center">Course Name</th>
+								<th width="700" class="text-center">Course Description</th>
+								<th th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}"
+									width="160" class="text-center">Buttons</th>
+							</tr>
+						</thead>
+
+						<tbody>
+							<div th:unless="${action == 'update'}">
+								<tr th:each="course : ${listCourses}">
+									<td th:utext="${course.id}">Course Id</td>
+									<td th:utext="${course.name}">Course Name</td>
+									<td th:utext="${course.description}">Course Description</td>
+									<td class="input-group mb-3" th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}">
+										<form th:action="@{/staff/editing/courses/updating-course}">
+											<input type="hidden" th:name="courseId" th:value="${course.id}"/>
+											<button class="btn btn-outline-warning btn-sm" type="submit">update</button>
+										</form>
+										<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">&nbsp; / &nbsp;</span>
+										<form th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+											  th:action="@{/staff/editing/courses/removing-course}" method="POST">
+											<input type="hidden" th:name="courseId" th:value="${course.id}"/>
+											<button class="btn btn-danger btn-sm" type="submit">delete</button>
+										</form>
+									</td>
+								</tr>
+
+								<div th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}">
+									<tr>
+										<form class="form-control" action="#" th:action="@{/staff/editing/courses/new-course}" method="POST">
+											<td><input type="number" disabled class="form-control" th:value="${idForNewCourse}"/></td>
+											<input type="hidden" class="form-control" th:value="${idForNewCourse}" th:name="courseId"/>
+											<td><input type="text" class="form-control" placeholder="Course..." th:name="name"/></td>
+											<td><input type="text" class="form-control flex-wrap" placeholder="Description..." th:name="description"/></td>
+											<td align="center"><button class="btn btn-outline-warning" type="submit"><h5>+</h5></button></td>
+										</form>
+									</tr>
+								</div>
+							</div>
+							<div th:if="${action == 'update'}">
+								<tr>
+									<form class="form-control" th:action="@{/staff/editing/courses/updating-course}" th:object="${course}" method="POST">
+										<td><input type="number" disabled class="form-control" th:value="${course.id}"/></td>
+										<input type="hidden" class="form-control" th:value="${course.id}" th:name="courseId"/>
+										<td><input type="text" class="form-control" th:value="${course.name}" th:name="name"/></td>
+										<td><input type="text" class="form-control flex" th:value="${course.description}" th:name="description"/></td>
+										<td><button class="btn btn-outline-warning" type="submit">apply</button></td>
+									</form>
+								</tr>
+							</div>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block th:insert="~{fragments/common::scripts}"></th:block>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+
+<head>
+    <th:block th:insert="~{fragments/common::meta}"></th:block>
+    <th:block th:insert="~{fragments/common::styles}"></th:block>
+    <title>students</title>
+    <style>
+        table, th, td {
+            border: 2px solid;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+
+<div class="container-fluid text">
+    <div class="row flex-nowrap  justify-content-start">
+        <th:block th:insert="~{fragments/common::sidebar}"></th:block>
+        <div class="col col-lg-10">
+            <div class="row">
+                <th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+            </div>
+
+            <div class="row">
+
+                <div align="center">
+                    <table>
+
+                        <thead>
+                        <tr>
+                            <th width="50">Id</th>
+                            <th width="150">First Name</th>
+                            <th width="150">Last Name</th>
+                            <th>Group</th>
+                            <th th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}"
+                                width="160" class="text-center">Buttons</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                            <div th:unless="${action == 'update'}">
+                                <tr th:each="student : ${listStudents}">
+                                    <td th:utext="${student.id}">Student Id</td>
+                                    <td th:utext="${student.firstName}">FirstName</td>
+                                    <td th:utext="${student.lastName}">LastName</td>
+                                    <td th:if="${student.group == null}"><input type="text" disabled value="Has no group!"/></td>
+                                    <td th:if="${student.group != null}">Group: {id=<span th:utext="${student.group.id}"></span>
+                                            <span th:text="${student.group.name}"></span>}
+                                    </td>
+                                    <td width="150" th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}">
+                                        <div class="input-group mb-3">
+                                            <form th:action="@{/staff/editing/students/updating-student}">
+                                               <input type="hidden" th:name="studentId" th:value="${student.id}"/>
+                                               <button class="btn btn-outline-warning btn-sm" type="submit">update</button>
+                                            </form>
+                                            <span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">&nbsp; / &nbsp;</span>
+                                            <form th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                                                  th:action="@{/staff/editing/students/removing-student}" method="POST">
+                                               <input type="hidden" th:name="studentId" th:value="${student.id}"/>
+                                               <button class="btn btn-danger btn-sm" type="submit">delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    <tr th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')} AND ${action != 'update'}">
+                                        <form method="POST" class="form-horizontal" th:action="@{/staff/editing/students/new-student}">
+
+                                            <td><input type="text" disabled th:value="${idForNewStudent}"/>
+                                            </td>
+                                            <input type="hidden" class="form-control" th:name="studentId" th:value="${idForNewStudent}">
+                                            <td><input type="text" class="flex-grow-1" placeholder="FirstName..." th:name="firstName"/></td>
+                                            <td><input type="text" class="flex-grow-1" placeholder="LastName" th:name="lastName"/></td>
+                                            <td><input type="number" class="flex-grow-1" placeholder="GroupId..." th:name="groupId"/></td>
+                                            <td align="center"><button class="btn btn-outline-warning" type="submit"><h5>+</h5></button></td>
+
+                                        </form>
+                                    </tr>
+                            </div>
+                            <div th:if="${action == 'update'}">
+                                <form th:object="${student}" th:action="@{/staff/editing/students/updating-student}" method="POST">
+                                    <tr>
+                                        <td><input type="number" th:value="${student.id}" th:name="studentId"/></td>
+                                        <td><input type="text" th:value="${student.firstName.strip()}" th:name="firstName"/></td>
+                                        <td><input type="text" th:value="${student.lastName.strip()}" th:name="lastName"/></td>
+                                        <td th:if="${student.group != null}"><input type="number" th:value="${student.group.id}" th:name="groupId"/></td>
+                                        <td th:if="${student.group == null}"><input type="number" placeholder="Student Id..." th:name="groupId"/></td>
+                                        <td><button type="submit" class="btn btn-outline-warning">apply</button></td>
+                                    </tr>
+                                </form>
+                            </div>
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:insert="~{fragments/common::scripts}"></th:block>
+
+</body>
+</html>

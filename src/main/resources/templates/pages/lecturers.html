@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+
+<head>
+	<th:block th:insert="~{fragments/common::meta}"></th:block>
+	<th:block th:insert="~{fragments/common::styles}"></th:block>
+	<title>lecturers</title>
+</head>
+
+<body>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+
+<div class="container-fluid text">
+	<div class="row flex-nowrap  justify-content-start">
+		<th:block th:insert="~{fragments/common::sidebar}"></th:block>
+		<div class="col col-lg-10">
+			<div class="row">
+				<th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+			</div>
+
+			<div class="row">
+				<div align="center">
+					<table>
+
+						<thead>
+							<tr>
+								<th width="100">Lecturer Id</th>
+								<th width="150">First Name</th>
+								<th width="150">Last Name</th>
+								<th width="150">Course Name</th>
+								<div th:if="${#authorization.expression('hasRole(''ROLE_STAFF'')')}">
+									<td width="150">Functions</td>
+								</div>
+							</tr>
+						</thead>
+
+
+						<tbody>
+
+							<div th:unless="${action == 'update'}">
+								<tr th:each="lecturer : ${listLecturers}">
+									<td th:utext="${lecturer.id}">Lecturer Id</td>
+									<td th:utext="${lecturer.firstName}">First Name</td>
+									<td th:utext="${lecturer.lastName}">Last Name</td>
+
+									<td th:unless="${lecturer.course == null}" th:utext="${lecturer.course.name}">Course</td>
+									<td th:if="${lecturer.course == null}">
+										<input type="text" placeholder="No course" class="position-static" disabled/>
+									</td>
+
+
+									<td th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}" width="150">
+										<div class="input-group mb-3">
+											<form th:action="@{/staff/editing/lecturers/updating-lecturer}">
+												<input type="hidden" th:name="lecturerId" th:value="${lecturer.id}"/>
+												<button class="btn btn-outline-warning btn-sm" type="submit">update</button>
+											</form>
+											<span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">&nbsp; / &nbsp;</span>
+											<form th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+													  th:action="@{/staff/editing/lecturers/removing-lecturer}" method="POST">
+												<input type="hidden" th:name="lecturerId" th:value="${lecturer.id}"/>
+												<button class="btn btn-danger btn-sm" type="submit">delete</button>
+											</form>
+										</div>
+									</td>
+								</tr>
+							</div>
+
+							<tr th:if="${action == 'update'}">
+								<form th:action="@{/staff/editing/lecturers/updating-lecturer}" th:object="${lecturer}" method="POST">
+									<td><input type="hidden" class="form-control" th:name="lecturerId" th:value="${lecturer.id}"/><span th:text="${lecturer.id}"></span></td>
+									<td><input type="text" class="form-control" th:name="firstName" th:value="${lecturer.firstName.strip()}"/></td>
+									<td><input type="text" class="form-control" th:name="lastName"  th:value="${lecturer.lastName.strip()}"/></td>
+									<td>
+										<select th:name="course" class="form-control selectpicker" id="course1" name="course1" required>
+											<option th:each="course : ${listCourses}" th:value="${course.name}">
+												<span th:text="${course.name}"></span>
+											</option>
+											<div th:unless="${lecturer.course == null}">
+												<option value="" th:selected="${lecturer.course.name}">
+													<span th:text="${lecturer.course.name}"></span>
+												</option>
+											</div>
+											<div th:if="${lecturer.course == null}">
+												<option value="" th:selected="${lecturer.course == null}">
+													<span>select course</span>
+												</option>
+											</div>
+
+										</select>
+									</td>
+									<td><button class="btn btn-danger btn-sm" type="submit">apply</button></td>
+								</form>
+							</tr>
+
+							<tr th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')} AND ${action != 'update'}">
+								<form class="form-control" action="#" th:action="@{/staff/editing/lecturers/new-lecturer}" method="POST">
+									<td><Label class="form-label">Add automatically</Label>id</td>
+									<td><input type="text" class="flex-column" placeholder="First Name..." th:name="fName"/></td>
+									<td><input type="text" class="flex-column" placeholder="Last Name..." th:name="lName"/></td>
+									<td>
+										<select th:name="course" class="form-control selectpicker" id="course" name="course" required>
+											<option th:each="course : ${listCourses}" th:value="${course.name}">
+												<span th:text="${course.name}"></span>
+											</option>
+											<option value="" th:selected="${course == null}">Select a course</option>
+										</select>
+									</td>
+										<td align="center"><button class="btn btn-outline-warning" type="submit"><h5>+</h5></button></td>
+								</form>
+							</tr>
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<th:block th:insert="~{fragments/common::scripts}"></th:block>
+	</body>
+</html>

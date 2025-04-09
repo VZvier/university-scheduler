@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+
+<head>
+    <th:block th:insert="~{fragments/common::meta}"></th:block>
+    <th:block th:insert="~{fragments/common::styles}"></th:block>
+</head>
+
+<body class style>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+
+<div class="container-fluid text">
+    <div class="row flex-nowrap  justify-content-start">
+            <th:block th:insert="~{fragments/common::sidebar}"></th:block>
+    <div class="col col-lg-10">
+        <div class="row">
+            <th:block th:insert="~{fragments/common::jumbotron}"></th:block></div>
+<div class="row">
+            <!--   Students     -->
+        <div class="col-sm-3">
+            <h3 class="header bg-secondary-subtle" align="center">Students</h3>
+            <ol>
+                <!-- Get all Students -->
+                <li>
+                    <form action="#" class="d-inline" th:action="@{/lecturer/students/all}">
+                        <button type="submit" class="btn btn-outline-primary">Get all students</button>
+                    </form>
+                </li>
+                <br><br>
+
+                <!-- Get Student By Id -->
+                <li>
+                    <form action="#" class="form-inline" th:action="@{/common/students/}">
+                        <div class="input-group mb-3">
+                            <input class="form-control" placeHolder="student Id..." th:name="studentId" type="number">
+                            <button type="submit" class="btn btn-primary ">Student by id</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Students in Group -->
+                <li>
+                    <form action="#" class="form-inline"
+                          th:action="@{/common/students/group-students}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Group Id..." th:name="groupId">
+                            <button type="submit" class="btn btn-primary">Students by group</button>
+                        </div>
+                    </form>
+                </li>
+            </ol>
+        </div>
+
+        <!--   Lecturers     -->
+        <div class="col-sm-3">
+            <h3 class="header bg-secondary-subtle" align="center">Lecturers</h3>
+            <ol>
+                <!-- Get All Lecturers -->
+                <li>
+                    <form class="d-inline" action="#" th:action="@{/lecturers/all}">
+                        <button type="submit" class="btn btn-outline-primary">Get all lecturers</button>
+                    </form>
+                </li>
+                <br><br>
+
+                <!-- Get Lecturer By Id -->
+                <li>
+                    <form action="#" class="form-inline" th:action="@{/lecturers/}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="lecturer Id..." th:name="lecturerId">
+                            <button type="submit" class="btn btn-primary">Lecturer by id</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Course Lecturer By Course Id -->
+                <li>
+                    <form action="#" class="form-inline"
+                          th:action="@{/lecturers/course-lecturers}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="course Id..." th:name="courseId">
+                            <button type="submit" class="btn btn-primary">Course's lecturer</button>
+                        </div>
+                    </form>
+                </li>
+            </ol>
+        </div>
+        <!--   Courses     -->
+        <div class="col-sm-3">
+            <h3 class="header bg-secondary-subtle" Align="center">Courses</h3>
+            <ol>
+
+                <!-- Get All Courses -->
+                <li>
+                    <form class="d-inline" action="#" th:action="@{/common/courses/all}">
+                        <button type="submit" class="btn btn-outline-primary">Get all courses</button>
+                    </form>
+                </li>
+                <br>
+
+                <!-- Get Course By Id -->
+                <li>
+                    <form action="#" class="form-check-inline" th:action="@{/common/courses/}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="course Id..."
+                                   name="courseId" id="cId2" th:name="courseId">
+                            <button type="submit" class="btn btn-primary">Course by id</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Lecturer's Course -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/courses/lecturer-course}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="lecturer Id..." th:name="lecturerId">
+                            <button type="submit" class="btn btn-primary">Lecturer's course</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+                <!-- Get courses for group -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/courses/group-courses}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Group Id..." th:name="groupId">
+                            <button type="submit" class="btn btn-primary">Group's courses</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Lecture Course -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/courses/lecture-course}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Lecture Id..." th:name="lectureId">
+                            <button type="submit" class="btn btn-primary">Lecture's course</button>
+                        </div>
+                    </form>
+                </li>
+
+            </ol>
+        </div>
+        <!--   Groups     -->
+        <div class="col-sm-3">
+            <h3 class="header bg-secondary-subtle" Align="center">Groups</h3>
+            <ol>
+
+                <!-- Get All Groups -->
+                <li>
+                    <form class="d-inline" action="#" th:action="@{/common/groups/all}">
+                        <button type="submit" class="btn btn-outline-primary">Get all groups</button>
+                    </form>
+                </li>
+                <br>
+
+                <!-- Get Group By Id -->
+                <li>
+                    <form action="#" class="form-check-inline" th:action="@{/common/groups/}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="group Id..." th:name="groupId">
+                            <button type="submit" class="btn btn-primary">Group by id</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Student's Group -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/groups/student-group}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Student Id..." th:name="studentId">
+                            <button type="submit" class="btn btn-primary">Student's group</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Groups On Lecture -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/groups/lecture-groups}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Lecture Id..." th:name="lectureId">
+                            <button type="submit" class="btn btn-primary">Groups on lecture</button>
+                        </div>
+                    </form>
+                </li>
+                <!-- Get a course groups -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/groups/course-groups}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Course Id..." th:name="courseId">
+                            <button type="submit" class="btn btn-primary">Groups on lecture</button>
+                        </div>
+                    </form>
+                </li>
+
+            </ol>
+        </div>
+        <!--   Lectures     -->
+        <div class="col-sm-3">
+            <h3 class="header bg-secondary-subtle" Align="center">Lectures</h3>
+            <ol>
+
+                <!-- Get All Lectures -->
+                <li>
+                    <form action="#" class="d-inline" th:action="@{/lecturer/lectures/all}">
+                        <button type="submit" class="btn btn-outline-primary">Get all lectures</button>
+                    </form>
+                </li>
+                <br>
+
+                <!-- Get Lecture By Id -->
+                <li>
+                    <form action="#" class="form-check-inline" th:action="@{/common/lectures/}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="lecture Id..." th:name="lectureId">
+                            <button type="submit" class="btn btn-primary">Lecture by id</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Group Lectures -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/common/lectures/group-lectures}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Group Id..." th:name="groupId">
+                            <button type="submit" class="btn btn-primary">Group's lectures</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Get Course Lectures -->
+                <li>
+                    <form action="#" class="form-check-inline"
+                          th:action="@{/lecturer/lectures/course-lectures}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="course Id..." th:name="courseId">
+                            <button type="submit" class="btn btn-primary">Course's lectures</button>
+                        </div>
+                    </form>
+                </li>
+
+            </ol>
+        </div>
+        <!--   Weekly Timetable     -->
+        <div class="col-sm-3">
+            <h3 class="header bg-secondary-subtle" Align="center">Timetable</h3>
+            <ol>
+
+                <!--  Common Weekly Timetable  -->
+                <li>
+                    <form class="form-inline" action="#" th:action="@{/lecturer/common-weekly-timetable}">
+                        <div class="input-group mb-3">
+                            <button id="comTT" type="submit" class="btn btn-outline-primary">Get common weekly timetable</button>
+                        </div>
+                    </form>
+                </li>
+                <br>
+
+                <!-- Weekly Timetable for student by id -->
+                <li>
+                    <form class="form-inline" action="#"
+                          th:action="@{/common/students-weekly-timetable}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="student Id..." th:name="studentId">
+                            <button type="submit" class="btn btn-primary">Student's timetable</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Weekly Timetable for lecturer by id  -->
+                <li>
+                    <form class="form-inline" action="#"
+                          th:action="@{/lecturer/lecturers-weekly-timetable}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Lecturer Id..." th:name="lecturerId">
+                            <button type="submit" class="btn btn-primary">Lecturer's timetable</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+            </ol>
+        </div>
+        <!--   Period Timetable     -->
+        <div class="col-sm-6">
+            <h3 class="header bg-secondary-subtle" Align="center">Timetable for required period</h3>
+            <ol>
+                <!--  Common Timetable For Period  -->
+                <li>
+                    <form action="#" class="form-inline"
+                          th:action="@{/lecturer/common-period-timetable}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="period(days)..." th:name="days">
+                            <button type="submit" class="btn btn-outline-primary">Common timetable</button>
+                        </div>
+                    </form>
+                </li>
+                <br>
+
+                <!-- Period Timetable For Student By Id -->
+                <li>
+                    <form class="form-inline" action="#"
+                          th:action="@{/common/students-period-timetable}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="student Id..." th:name="studentId">
+                            <input type="number" class="form-control" placeHolder="period(days)..." th:name="days">
+                            <button type="submit" class="btn btn-primary">Student's timetable</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+                <!-- Period Timetable For Lecturer By id  -->
+                <li>
+                    <form class="form-inline" action="#"
+                          th:action="@{/lecturer/lecturers-period-timetable}">
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeHolder="Lecturer Id..." th:name="lecturerId">
+                            <input type="number" class="form-control" placeHolder="period(days)..." th:name="days">
+                            <button type="submit" class="btn btn-primary">Lecturer's timetable</button>
+                        </div>
+                    </form>
+                    <br>
+                </li>
+
+            </ol>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+
+<th:block th:insert="~{fragments/common::scripts}"></th:block>
+
+</body>
+
+</html>

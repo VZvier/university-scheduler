@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}" xmlns="http://www.w3.org/1999/html"></th:block>
+<head>
+	<th:block th:insert="~{fragments/common::meta}"></th:block>
+	<th:block th:insert="~{fragments/common::styles}"></th:block>
+	<title>lectures</title>
+</head>
+<body>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+
+<div class="container-fluid text">
+	<div class="row flex-nowrap  justify-content-start">
+		<th:block th:insert="~{fragments/common::sidebar}"></th:block>
+		<div class="col col-lg-10">
+			<div class="row">
+				<th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+			</div>
+
+			<div class="row">
+				<div align="center">
+					<table>
+
+						<thead>
+							<tr>
+								<th width="80">Lecture Id</th>
+								<th width="100">Lecture day</th>
+								<th width="100">Lectures pair</th>
+								<th width="70">Lectures start</th>
+								<th width="70">Lectures end</th>
+								<th width="200">Lectures course</th>
+								<th width="444	">Lectures groups</th>
+								<th th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}"
+									width="160" class="text-center">Buttons</th>
+							</tr>
+						</thead>
+
+						 <tbody>
+						 	<div th:unless="${action == 'update'}">
+								<tr th:each="lecture : ${listLectures}">
+
+									<td th:utext="${lecture.id}">id</td>
+									<td th:utext="${lecture.day}">day</td>
+									<td th:utext="${lecture.pair}">pair</td>
+									<td th:utext="${lecture.start}">start</td>
+									<td th:utext="${lecture.end}">end</td>
+									<td th:utext="${lecture.course.name}">course</td>
+									<div th:if="${lecture.groups.isEmpty()}">
+										<td><input class="form-control flex-wrap" disabled /></td>
+									</div>
+									<div th:if="${!lecture.groups.isEmpty()}">
+										<td>Groups:
+											<span th:each="group : ${lecture.groups}"> {<span th:utext="${group != null}?${group.id + ', '}:''">
+											</span>
+											<span th:utext="${group != null}?${group.name + ' '}:''"></span>}
+											</span>;
+										</td>
+									</div>
+
+										<td th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}" width="150">
+											<div class="input-group mb-3">
+												<form th:action="@{/staff/editing/lectures/updating-lecture}" method="GET">
+													<input type="hidden" th:name="lectureId" th:value="${lecture.id}"/>
+													<button class="btn btn-outline-warning btn-sm" type="submit">update</button>
+												</form>
+												<span>&nbsp; / &nbsp;</span>
+												<form th:action="@{/staff/editing/lectures/removing-lecture}" method="POST">
+													<input type="hidden" th:name="lectureId" th:value="${lecture.id}"/>
+													<button class="btn btn-danger btn-sm" type="submit">delete</button>
+												</form>
+											</div>
+										</td>
+								</tr>
+								<tr th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')} AND ${action != 'update'}">
+									<form class="form-control" action="#" th:action="@{/staff/editing/lectures/new-lecture}" method="POST">
+										<td><input type="number" disabled class="form-label" th:value="${newLectureId}"/></td>
+										<input type="hidden" class="form-label" th:name="lectureId" th:value="${newLectureId}"/>
+										<td>
+											<select th:name="day" class="form-control selectpicker" id="day" name="day">
+												<option value="" th:selected="${day == null}">day</option>
+												<option value="1">MONDAY</option>
+												<option value="2">TUESDAY</option>
+												<option value="3">WEDNESDAY</option>
+												<option value="4">THURSDAY</option>
+												<option value="5">FRIDAY</option>
+											</select>
+										</td>
+										<td>
+											<select th:name="pair" class="form-control selectpicker" id="pair" name="pair">
+												<option value="" th:selected="${pair == null}">pair</option>
+												<option>1</option>
+												<option>2</option>
+												<option>3</option>
+												<option>4</option>
+											</select>
+										</td>
+										<td><input disabled value="Auto" class="flex-wrap"/></td>
+										<td><input disabled value="Auto" class="flex-wrap"/></td>
+										<td>
+											<select th:name="course" class="form-control selectpicker flex-wrap" id="course" name="course" required>
+												<option th:each="course : ${listCourses}" th:value="${course.name}">
+													<span th:text="${course.name}"></span>
+												</option>
+												<option value="" th:selected="${course == null}">Select a course</option>
+											</select>
+										</td>
+										<td>
+											<label for="inputNewGroups">Input one group id of existing:</label>
+											<div class="input-group mb-3" id="inputNewGroups">
+												<input type="number" placeholder="Group id" class="form-control" th:name="gIdOne"/>
+												<input type="number" placeholder="Group id"  class="form-control" th:name="gIdTwo"/>
+												<input type="number" placeholder="Group id" class="form-control" th:name="gIdThree"/>
+											</div>
+										</td>
+										<td align="center"><button class="btn btn-outline-warning" type="submit"><h5>+</h5></button></td>
+									</form>
+								</tr>
+							</div>
+							 <tr th:if="${action == 'update'}">
+								 <form class="form-control" th:object="${lecture}"
+									   		th:action="@{/staff/editing/lectures/updating-lecture}" method="POST">
+									 <td><input type="number" disabled class="form-label" th:value="${lecture.id}"/></td>
+									 <input type="hidden" class="form-label" th:name="lectureId" th:value="${lecture.id}"/>
+									 <td>
+										 <select th:name="day" class="form-control selectpicker" id="day1" name="day1">
+											 <option value="" th:selected="${lecture.day == null}">day</option>
+											 <option value="" th:selected="${lecture.day != null}"><span th:text="${lecture.day}"></span></option>
+											 <option value="1">MONDAY</option>
+											 <option value="2">TUESDAY</option>
+											 <option value="3">WEDNESDAY</option>
+											 <option value="4">THURSDAY</option>
+											 <option value="5">FRIDAY</option>
+										 </select>
+									 </td>
+									 <td>
+										 <select th:name="pair" class="form-control selectpicker" id="pair1" name="pair1">
+											 <option value="" th:selected="${lecture.pair != null}"><span th:text="${lecture.pair}"></span></option>
+											 <option value="" th:selected="${lecture.pair == null}"><span>pair</span></option>
+											 <option>1</option>
+											 <option>2</option>
+											 <option>3</option>
+											 <option>4</option>
+										 </select>
+									 </td>
+									 <td><input disabled value="Auto" class="flex-wrap"/></td>
+									 <td><input disabled value="Auto" class="flex-wrap"/></td>
+									 <td>
+										 <select th:name="course" class="form-control selectpicker flex-wrap" id="course1" name="course1" required>
+											 <option value="" th:selected="${lecture.course != null}" th:value="${lecture.course.name}"><span th:text="${lecture.course.name}"></span></option>
+											 <option th:each="course : ${listCourses}" th:value="${course.name}">
+												 <span th:text="${course.name}"></span>
+											 </option>
+										 </select>
+									 </td>
+									 <td>
+										 <label for="inputGroup">Input one group id of existing:</label>
+										 <div class="input-group mb-3" id="inputGroup" >
+											 <input th:value="${lecture.groups.size() > 0}?${lecture.groups.get(0).id}:'Group id'" type="number" placeholder="Group1.." class="form-control" th:name="gIdOne"/>
+											 <input th:value="${lecture.groups.size() > 1}?${lecture.groups.get(1).id}:'Group id'" type="number" placeholder="Group2.." class="form-control" th:name="gIdTwo"/>
+											 <input th:value="${lecture.groups.size() > 2}?${lecture.groups.get(2).id}:'Group id'" type="number" placeholder="Group3.." class="form-control" th:name="gIdThree"/>
+										 </div>
+									 </td>
+									 <td><button type="submit" class="btn btn-outline-warning">apply</button></td>
+								 </form>
+							 </tr>
+
+						</tbody>
+
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+	<th:block th:insert="~{fragments/common::scripts}"></th:block>
+
+	</body>
+</html>

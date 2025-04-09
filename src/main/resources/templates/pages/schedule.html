@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+<head>
+    <th:block th:insert="~{fragments/common::meta}"></th:block>
+    <th:block th:insert="~{fragments/common::styles}"></th:block>
+    <title>timetable</title>
+</head>
+<body>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+
+<div class="container-fluid text">
+    <div class="row flex-nowrap  justify-content-start">
+        <th:block th:insert="~{fragments/common::sidebar}"></th:block>
+        <div class="col col-lg-10">
+            <div class="row">
+                <th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+            </div>
+
+            <div class="row">
+                <div align="center">
+                    <table>
+
+                        <thead>
+                        <tr>
+                            <th width="80">Lecture Id</th>
+                            <th width="50">Lecture day</th>
+                            <th width="50">Lectures pair</th>
+                            <th width="100">Lectures start</th>
+                            <th width="100">Lectures end</th>
+                            <th width="200">Lectures course</th>
+                            <th width="444	">Lectures groups</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr th:each="lecture : ${listLectures}">
+
+                            <td th:utext="${lecture.id}">id</td>
+                            <td th:utext="${lecture.day}">day</td>
+                            <td th:utext="${lecture.pair}">pair</td>
+                            <td th:utext="${lecture.start}">start</td>
+                            <td th:utext="${lecture.end}">end</td>
+                            <td th:utext="${lecture.course.name}">course</td>
+                            <td th:utext="${lecture.groups}"></td>
+
+                        </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="~{fragments/common::scripts}"></th:block>
+</body>
+</html>
