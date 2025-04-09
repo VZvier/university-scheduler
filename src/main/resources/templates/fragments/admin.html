@@ -1,0 +1,113 @@
+<th:block th:fragment="admin-navbar">
+    <div class="navbar navbar-dark bg-dark mb-4">
+        <div class="btn-group" role="group">
+            <form class="form-check-inline" action="#" th:action="@{/}">
+                <button type="submit" class="btn btn-outline-primary">Home</button>
+            </form>
+            <form action="#" th:action="@{/admin/users/all-users}">
+                <button type="submit" class="btn btn-outline-warning">Get all users</button>
+            </form>
+        </div>
+        <div><h1 style="color: #0a550a"><a th:href="@{/}">UNIVERSITY</a></h1></div>
+        <div class="btn-group-sm" role="group">
+            <form class="form-check-inline" aline="right-center" action="#" th:action="@{/admin/users/all-users-with-role}">
+                <span class="text-warning" style="font-size: 20px ">Get :</span>
+                <button type="submit" class="btn btn-outline-warning " th:name="role" th:value="STUDENT">Students</button>
+                <button type="submit" class="btn btn-outline-warning " th:name="role" th:value="LECTURER">Lecturers</button>
+                <button type="submit" class="btn btn-outline-warning " th:name="role" th:value="STAFF">Staff</button>
+                <button type="submit" class="btn btn-outline-warning " th:name="role" th:value="ADMIN">Admins</button>
+            </form>
+            <form class="form-check-inline" aline="right-center" action="#" th:action="@{/logout}">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+</th:block>
+
+<th:block th:fragment="user-table">
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th width="50">User_Id</th>
+                <th width="150">User_Name</th>
+                <th width="150">Password</th>
+                <th width="150">User_Role</th>
+                <th width="115">Remove user</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="user : ${userList}">
+                <td th:utext="${user.id}">id</td>
+                <td th:utext="${user.login}">login</td>
+                <td th:utext="${user.password}">pass</td>
+                <td th:utext="${user.role}">role</td>
+                <td>
+                    <form th:action="@{/admin/users/removing-user/}" method="POST">
+                        <input type="hidden" th:name="id" th:value="${user.id}"/>
+                        <button class="btn btn-danger btn-sm" type="submit">delete</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr>
+                <form class="form-control" action="#" th:action="@{/admin/users/new-user/}" method="post">
+                    <td><Label class="form-label">Add automatically</Label></td>
+                    <td><input type="text" class="flex-column" placeholder="UserName..." th:name="username"/></td>
+                    <td><input type="password" class="flex-column" placeholder="Password..." th:name="password"/></td>
+                    <td><input type="text" class="flex-column" placeholder="ROLE..." th:name="role"/></td>
+                    <td><button class="btn btn-outline-secondary" type="submit"><h3>+</h3></button></td>
+                </form>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</th:block>
+
+<th:block th:fragment="users-for-sidebar">
+    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+        <li>
+            <a href="#submenu6" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+                <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline"><h3>User Management</h3></span></a>
+            <ul class="collapse nav flex-column ms-1" id="submenu6" data-bs-parent="#menu">
+                <!-- Start of sub menu's sub cases -->
+                <li class="w-100">
+                    <form class="form-inline" th:action="@{/admin/users/all-users-with-role}">
+                        <label>Get all users with role:</label>
+                            <div class="input-group mb-3">
+                                <button type="submit" class="btn flex-sm-grow-1 btn-outline-warning" >Users by role:</button>
+                                <select th:name="role" class="form-control selectpicker" id="role" name="role" required>
+                                    <option value="" th:selected="${role == null}">Select a role</option>
+                                    <option th:value="STUDENT">STUDENT</option>
+                                    <option th:value="LECTURER">LECTURER</option>
+                                    <option th:value="ADMIN">ADMIN</option>
+                                    <option th:value="STAFF">STAFF</option>
+                                </select>
+                            </div>
+                    </form>
+                </li>
+                <br>
+                <li>
+                    <form action="#" class="form-inline" th:action="@{/admin/users/}">
+                        <label for="uId1">Get user by id:</label>
+                        <div class="input-group mb-md-4">
+                            <input type="number" class="form-control flex-grow-1" placeholder="User id..." id="uId1" name="uId" th:name="userId"/>
+                            <button type="submit" class="btn btn-outline-warning btn-sm">Get</button>
+                        </div>
+                    </form>
+                </li>
+                <li>
+                    <form action="#" class="form-inline" th:action="@{/admin/users/user-by-login}">
+                        <label for="lrId2">User by login:</label>
+                        <div class="input-group mb-md-4">
+                            <input type="text" class="form-control flex-sm-row" placeholder="login..." id="lrId2" name="lrId2" th:name="login"/>
+                            <button type="submit" class="btn btn-outline-warning btn-sm">Get</button>
+                        </div>
+                    </form>
+                </li>
+            </ul>
+        </li>
+    </div>
+</th:block>

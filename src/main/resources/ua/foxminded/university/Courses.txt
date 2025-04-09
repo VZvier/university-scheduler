@@ -1,0 +1,24 @@
+1|Mathematics|Mathematics learns the topics of numbers, formulas and related structures. 
+2|Physics|Physics is the natural science of matter, involving the study of matter.
+3|Biology|Biology is the scientific study of life.
+4|Chemistry|Chemistry is the scientific study of the properties and behavior of matter.
+5|Geography|Geography is a field of science devoted to the study Earth.
+6|History|History is the systematic study and documentation of the human past.
+7|Literature|Literature is any collection of written works for study.
+8|English|A subject that studies the rules for building speech, grammar and spelling.
+9|Physical Education|Encourages movement systems to promote health and fitness.
+10|Informatics|Studies development of the software.
+11|Philosophy|Studies the relationship of man to environment.
+12|Psychology|Studies patterns of mental activity of a person and groups of people.
+13|Political Science|Studies politics and political activity.
+14|Archeology|Studies the past using material sources.
+15|Astronomy|Science of stars and celestial bodies.
+16|Architecture|Science of structural design.
+17|Logistics|Science of effectively organizing the movement of resources.
+18|Economy|Science that studies the production and consumption of goods and services.
+19|Engineering|Studies applying science and mathematics to solve problems.
+20|Modeling|Study of objects of knowledge on their models.
+21|Ethnology|Science that studies ethnic processes.
+22|Geometry|Studies spatial structures and relationships.
+23|Meteorology|Science of the atmosphere and the processes occurring in it.
+24|Sociology|The science of relationships in groups and communities of people.

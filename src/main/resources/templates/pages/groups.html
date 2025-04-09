@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<th:block th:insert="~{fragments/common::languages}"></th:block>
+
+<head>
+    <th:block th:insert="~{fragments/common::meta}"></th:block>
+    <th:block th:insert="~{fragments/common::styles}"></th:block>
+    <title>Groups</title>
+</head>
+
+<body>
+
+<th:block th:insert="~{fragments/common::navbar}"></th:block>
+<div class="container-fluid text">
+    <div class="row flex-nowrap  justify-content-start">
+        <th:block th:insert="~{fragments/common::sidebar}"></th:block>
+        <div class="col col-lg-10">
+            <div class="row">
+                <th:block th:insert="~{fragments/common::jumbotron}"></th:block>
+            </div>
+
+            <div class="row">
+                <div align="center">
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th width="100">Group Id</th>
+                                <th width="150">Group Name</th>
+                                <th width="350" class="text-center">Group's courses</th>
+                                <th th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}"
+                                    width="160" class="text-center">Buttons</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <div th:unless="${action == 'update'}">
+                                <tr th:each="group : ${listGroups}">
+                                    <td th:utext="${group.id}">Group Id</td>
+                                    <td th:utext="${group.name}">Group Name</td>
+                                    <td th:if="${group.courses.isEmpty()}">
+                                            <input class="form-control flex-wrap" disabled></td>
+                                    <td th:if="${!group.courses.isEmpty()}">Courses:
+                                        <span th:each="course : ${group.courses}"><span th:utext="${course.name + ', '}"></span></span>
+                                    </td>
+                                    <td th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}">
+                                        <div class="input-group mb-3">
+                                            <form th:action="@{/staff/editing/groups/updating-group}">
+                                                <input type="hidden" th:name="groupId" th:value="${group.id}"/>
+                                                <button class="btn btn-outline-warning btn-sm" type="submit">update</button>
+                                            </form>
+                                            <span th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">&nbsp; / &nbsp;</span>
+                                            <form th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}"
+                                                    th:action="@{/staff/editing/groups/removing-group}" method="POST">
+                                                <input type="hidden" th:name="groupId" th:value="${group.id}"/>
+                                                <button class="btn btn-danger btn-sm" type="submit">delete</button>
+                                            </form>
+                                          </div>
+                                    </td>
+                                </tr>
+
+                                <div th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')} AND ${action != 'update'}">
+                                    <tr>
+                                        <form class="form-control" action="#" th:action="@{/staff/editing/groups/new-group}" method="POST">
+                                            <td><input type="number" disabled class="form-label" th:value="${newGroupId}"/></td>
+                                            <input type="hidden" class="form-label" th:name="groupId" th:value="${newGroupId}"/>
+                                            <td><input type="text" class="flex-column" placeholder="Group name..." th:name="name"/></td>
+                                            <td><input class="form-control flex-wrap" disabled value="Can be added after group created!"></td>
+                                            <td align="center"><button class="btn btn-outline-warning" type="submit"><h5>+</h5></button></td>
+                                        </form>
+                                    </tr>
+                                </div>
+                            </div>
+                            <div th:if="${action == 'update'}">
+                                <tr>
+                                    <form class="form-control" th:action="@{/staff/editing/group/updating-group}" th:object="${group}" method="POST">
+                                        <td><input type="number" disabled class="flex-grow-1" th:value="${group.id}"/></td>
+                                        <input type="hidden" th:value="${group.id}" th:name="groupId"/>
+                                        <td><input type="text" class="flex-grow-1" th:value="${group.name}" th:name="name"/></td>
+                                        <td><input class="form-control flex-wrap" disabled value="Can be added from side menu!"></td>
+                                        <td><button class="btn btn-outline-warning" type="submit">apply</button></td>
+                                    </form>
+                                </tr>
+                            </div>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="~{fragments/common::scripts}"></th:block>
+</body>
+</html>

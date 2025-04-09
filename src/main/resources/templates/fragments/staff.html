@@ -1,0 +1,117 @@
+
+<th:block th:fragment="sidebar-staff-functions">
+  <div th:if="${#authorization.expression('hasAnyRole(''ROLE_STAFF'', ''ROLE_ADMIN'')')}">
+    <li>
+      <a href="#submenu5" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
+        <i class="fs-4 bi-bootstrap"></i> <span class="ms-1 d-none d-sm-inline"><h4>Functions for Staff</h4></span></a>
+      <ul class="collapse nav flex-column ms-1" id="submenu5" data-bs-parent="#menu">
+
+        <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white">
+          <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu-inner">
+            <a href="#inner-submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+              <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline"><h4>Assign</h4></span> </a>
+            <ul class="collapse nav flex-column ms-1" id="inner-submenu1" data-bs-parent="#menu-inner">
+
+                  <!-- Start of inner-sub menu's sub cases -->
+                  <li class="w-100">
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/courses/assigning/}">
+                      <label for="group-to-course">Assign group to course:</label>
+                      <div class="input-group mb-3" id="group-to-course">
+                          <button type="submit" class="btn flex-grow-1 btn-outline-warning" >Assign:</button>
+                          <input class="form-control flex-sm-fill" placeholder="Group id" th:name="groupId"/>
+                          <input class="form-control flex-grow-1" placeholder="Course id" th:name="courseId"/>
+                      </div>
+                    </form>
+                  </li>
+                  <br>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/courses/assigning/}">
+                      <label for="lecturer-to-course">Assign/re-assign lecturer to course:</label>
+                      <div class="input-group mb-md-4" id="lecturer-to-course">
+                        <input type="number" class="form-control flex-grow-1" placeholder="Lecturer id" th:name="lecturerId"/>
+                        <input type="number " class="form-control flex-grow-1" placeholder="Course id" th:name="courseId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/courses/assigning/}">
+                      <label for="course-for-lecture">Assign/re-assign course for lecture:</label>
+                      <div class="input-group mb-md-4" id="course-for-lecture">
+                        <input type="number" class="form-control flex-sm-row" placeholder="Lecture id..." th:name="lectureId"/>
+                        <input type="number" class="form-control flex-sm-row" placeholder="Course id..." th:name="courseId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/groups/adding-lecture}">
+                      <label for="group-to-lecture">Assign group to lecture:</label>
+                      <div class="input-group mb-md-4" id="group-to-lecture">
+                        <input type="number" class="form-control flex-sm-row" placeholder="Group id..." th:name="groupId"/>
+                        <input type="number" class="form-control flex-sm-row" placeholder="Lecture id..." th:name="lectureId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/students/adding-group}">
+                      <label for="student-to-group">Assign student to group:</label>
+                      <div class="input-group mb-md-4" id="student-to-group">
+                        <input type="number" class="form-control flex-sm-row" placeholder="Student id..." th:name="studentId"/>
+                        <input type="number" class="form-control flex-sm-row" placeholder="Group id..." th:name="groupId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+            </ul>
+              <a href="#inner-submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline"><h4>Unsign</h4></span> </a>
+              <ul class="collapse nav flex-column ms-1" id="inner-submenu2" data-bs-parent="#menu-inner">
+                <!-- Start of sub menu's sub cases -->
+                  <li class="w-100">
+                    <form class="form-inline" th:action="@{/staff/editing/courses/unsigning/}">
+                      <label for="group-to-course">Unsign group from course:</label>
+                      <div class="input-group mb-3" id="group-from-course">
+                        <button type="submit" class="btn flex-grow-1 btn-outline-warning" >unsign:</button>
+                        <input class="form-control flex-sm-fill" placeholder="Group id" th:name="groupId"/>
+                        <input class="form-control flex-grow-1" placeholder="Course id" th:name="courseId"/>
+                      </div>
+                    </form>
+                  </li>
+                  <br>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/courses/unsigning/}">
+                      <label for="lecturer-from-course">Remove lecturer from course:</label>
+                      <div class="input-group mb-md-4" id="lecturer-from-course">
+                        <input type="number" class="form-control flex-grow-1" placeholder="Lecturer id..." th:name="lecturerId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/groups/removing-lecture}">
+                      <label for="group-from-lecture">Remove group from lecture:</label>
+                      <div class="input-group mb-md-4" id="group-from-lecture">
+                        <input type="number" class="form-control flex-sm-row" placeholder="Group id..." th:name="groupId"/>
+                        <input type="number" class="form-control flex-sm-row" placeholder="Lecture id..." th:name="lectureId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+                  <li>
+                    <form action="#" class="form-inline" th:action="@{/staff/editing/students/removing-group}">
+                      <label for="student-from-group">Remove student from group:</label>
+                      <div class="input-group mb-md-4" id="student-from-group">
+                        <input type="number" class="form-control flex-sm-row" placeholder="Student id..." th:name="studentId"/>
+                        <button type="submit" class="btn btn-outline-warning btn-sm">ok</button>
+                      </div>
+                    </form>
+                  </li>
+              </ul>
+            </ul>
+        </div>
+      </ul>
+    </li>
+  </div>
+</th:block>
