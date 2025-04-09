@@ -4,6 +4,13 @@
     <th:block th:insert="~{fragments/common::meta}"></th:block>
     <th:block th:insert="~{fragments/common::styles}"></th:block>
     <title>timetable</title>
+    <style>
+        .gr-list, .gr-col, .gr-row{
+            border: none !important;
+            font-size: 12px !important;
+        }
+
+    </style>
 </head>
 <body>
 
@@ -29,7 +36,7 @@
                             <th width="100">Lectures start</th>
                             <th width="100">Lectures end</th>
                             <th width="200">Lectures course</th>
-                            <th width="444	">Lectures groups</th>
+                            <th width="444">Lectures groups</th>
                         </tr>
                         </thead>
 
@@ -42,7 +49,20 @@
                             <td th:utext="${lecture.start}">start</td>
                             <td th:utext="${lecture.end}">end</td>
                             <td th:utext="${lecture.course.name}">course</td>
-                            <td th:utext="${lecture.groups}"></td>
+                            <td th:object="${lecture.groups}">
+
+                                <table class="gr-list">
+                                    <tbody>
+                                        <tr class="gr-row" th:each="group:${lecture.groups}">
+                                            <td class="gr-col">Group: { Id:
+                                                <span th:utext="${group.id}"></span>, Name:
+                                                <span  th:utext="${group.name}"></span>}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </td>
 
                         </tr>
                         </tbody>
