@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
@@ -9,12 +9,18 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
 
+  <properties>
+    <maven.compiller.source>19</maven.compiller.source>
+    <maven.compiller.source>19</maven.compiller.source>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <groupId>ua.foxminded</groupId>
   <artifactId>university</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>university Maven Webapp</name>
-  <url>http://maven.apache.org</url>
+  <url>https://maven.apache.org</url>
 
   <dependencies>
     <!-- Spring boot starter-->
@@ -93,6 +99,15 @@
       <artifactId>postgresql</artifactId>
       <scope>runtime</scope>
     </dependency>
+    <!--  Docker-compose  -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-docker-compose</artifactId>
+      <version>3.2.0</version>
+      <optional>true</optional>
+    </dependency>
+
+    <!-- Other dependencies-->
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -108,6 +123,16 @@
     </dependency>
   </dependencies>
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <mainClass>ua.foxminded.university.Application</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
     <finalName>university</finalName>
   </build>
+
 </project>
