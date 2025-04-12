@@ -32,7 +32,7 @@ public class DefaultSecurityConfig {
                         .requestMatchers("/common/courses/all")
                         .permitAll()
 
-                        .requestMatchers("/common/**")
+                        .requestMatchers("/common/**", "/common/*")
                         .hasAnyRole(UserRole.STUDENT.getName(), UserRole.LECTURER.getName(),
                                 UserRole.STAFF.getName(), UserRole.ADMIN.getName())
 
