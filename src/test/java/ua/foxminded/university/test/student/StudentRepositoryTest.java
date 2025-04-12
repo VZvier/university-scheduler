@@ -39,7 +39,7 @@ class StudentRepositoryTest {
 	}
 
 	@Test
-	void testfindStudentById() {
+	void tesFindStudentById() {
 		Student actualResult = studentRepository.findById((long) 1).get();
 		Student expectedResult = Student.builder().id((long) 1).group(null).firstName("Adriana   ")
 				.lastName("Morgan    ").build();
