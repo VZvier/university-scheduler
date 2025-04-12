@@ -52,7 +52,7 @@ ___
 
 ## UI screenshots
 
-> [Click here to show screenshots.](screenshots/csreenshots.md) 
+> [Click here to see screenshots.](screenshots/csreenshots.md) 
 
 ___
 
