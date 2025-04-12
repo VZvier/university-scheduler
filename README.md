@@ -1,21 +1,16 @@
-<<<<<<< HEAD
-# university-scheduler
-Java Spring application for create and show schedules of lessons for students and teachers.
-=======
 # UNIVERSITY-SCHEDULER
 
 ___
 
 ## Purpose
 
-The purpose of the application is to *randomly* create a thousand students, a hundred lecturers. Enroll all students in
+>The purpose of the application is to *randomly* create a thousand students, a hundred lecturers. Enroll all students in
 *randomly* generated groups, and assign courses to lecturers. Randomly enroll each group in several courses, and then
 generate a class schedule for each group.
 
 Create user account for each student with the role *"STUDENT"*, a lecturer with the role *"LECTURER"*, and also create
-several users for the staff with the role *"STAFF"* and administrators with the role *"ADMIN"*. 
-
-Each role have different *access level*
+several users for the staff with the role *"STAFF"* and administrators with the role *"ADMIN"*.
+Each role have different *rights* or *access levels*.
 
 ___
 
@@ -57,7 +52,7 @@ ___
 
 ## UI screenshots
 
-[Click here to show screenshots.](screenshots/csreenshots.md) 
+> [Click here to show screenshots.](screenshots/csreenshots.md) 
 
 ___
 
@@ -71,5 +66,4 @@ run application in docker container on *detached* mode.
 
 Author *Zvieriev Vladyslav*. 
 
-## Project complete.
->>>>>>> f9daaab (Commit N5)
+> ## Project complete.
